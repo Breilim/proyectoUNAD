@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción Delictiva</title>
+    <script>
+        async function enviarDatos() {
+            const tipo_delito = document.getElementById('tipo_delito').value;
+            const ubicacion = document.getElementById('ubicacion').value;
+            const hora = document.getElementById('hora').value;
+
+            const response = await fetch('http://localhost:5000/predecir', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tipo_delito, ubicacion, hora })
+            });
+
+            const resultado = await response.json();
+            document.getElementById('resultado').innerText = `Riesgo: ${resultado.riesgo}`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Predicción Delictiva</h1>
+    <label for="tipo_delito">Tipo de Delito:</label>
+    <input type="text" id="tipo_delito" />
+    <br />
+    <label for="ubicacion">Ubicación:</label>
+    <input type="text" id="ubicacion" />
+    <br />
+    <label for="hora">Hora:</label>
+    <input type="text" id="hora" />
+    <br />
+    <button onclick="enviarDatos()">Predecir</button>
+    <p id="resultado"></p>
+</body>
+</html>
+ 
